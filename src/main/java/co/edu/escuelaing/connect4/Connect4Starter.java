@@ -5,8 +5,15 @@
 package co.edu.escuelaing.connect4;
 
 import java.util.Collections;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import co.edu.escuelaing.connect4.db.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import java.util.HashMap;
+import java.util.Map;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 /**
  *
@@ -15,9 +22,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class Connect4Starter {
     
+    @Autowired
+    private UserRepository repository;
+    
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(Connect4Starter.class);
-
+        Map<String,Object> properties = new HashMap<>();
+        properties.put("spring.data.mongodb.uri", "mongodb+srv://pokecris200:Sept2022.@cluster0.1bffmnu.mongodb.net/MongoDatos?retryWrites=true&w=majority");
         app.setDefaultProperties(Collections.singletonMap("server.port", getPort()));
         app.run(args);
 
@@ -30,5 +41,11 @@ public class Connect4Starter {
         }
         return 8080; 
     }
+    
+    @GetMapping("/register")
+    public void register(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password){
+        repository.save(new User(username,password));
+    }
+    
     
 }
