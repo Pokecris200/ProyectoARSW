@@ -223,8 +223,18 @@ class WSC4Channel {
 
 function C4ServiceURL() {
     var host = window.location.host;
-    var url = 'ws://' + (host) + '/c4Service';
+    var url = WShostURL() + '/c4Service';
     console.log("URL Calculada: " + url);
+    return url;
+}
+
+// Retorna la url del servicio. Es una función de configuración.
+function WShostURL() {
+    var host = window.location.host;
+    var url = 'wss://' + (host);
+    if (host.startsWith('localhost') || host.startsWith('127.0.0.1')) {
+        url = 'ws://' + (host);
+    }
     return url;
 }
 
