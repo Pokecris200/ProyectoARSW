@@ -9,7 +9,7 @@ class Tablero extends React.Component{
                         (msg) => { 
                         var obj = JSON.parse(msg);
                         console.log("On func call back ", msg);
-                        this.juego(obj.c); 
+                        this.putToken(obj.c); 
                 });
         
         this.state = {
@@ -48,30 +48,34 @@ class Tablero extends React.Component{
 
     juego(c) {
         if (!this.state.gameOver) {
-          // Coloca una ficha en el tablero
-            let tablero = this.state.tablero;
-            for (let f = 5; f >= 0; f--) {
-                if (!tablero[f][c]) {
-                  tablero[f][c] = this.state.currentPlayer;
-                  break;
-                }
-            }
-
-            // Revisa el estado del tablero
-            let result = this.checkAll(tablero);
-            if (result === this.state.jugador1) {
-                this.setState({ tablero, gameOver: true, finalMSG: '¡Rojo Gana!' });
-            } else if (result === this.state.jugador2) {
-                this.setState({ tablero, gameOver: true, finalMSG: '¡Amarillo Gana!' });
-            } else if (result === 'empate') {
-                this.setState({ tablero, gameOver: true, finalMSG: 'Empate :(' });
-            } else {
-                this.setState({ tablero, currentPlayer: this.togglePlayer() });
-            }
+            this.putToken(c);
             let wsreference = this.comunicationWS;
             wsreference.send(c);
         } else {
             this.setState({ finalMSG: 'Game over. Inicie un nuevo Juego.' });
+        }
+    }
+    
+    putToken(c){
+        // Coloca una ficha en el tablero
+        let tablero = this.state.tablero;
+        for (let f = 5; f >= 0; f--) {
+            if (!tablero[f][c]) {
+                tablero[f][c] = this.state.currentPlayer;
+                break;
+            }
+        }
+
+        // Revisa el estado del tablero
+        let result = this.checkAll(tablero);
+        if (result === this.state.jugador1) {
+            this.setState({tablero, gameOver: true, finalMSG: '¡Rojo Gana!'});
+        } else if (result === this.state.jugador2) {
+            this.setState({tablero, gameOver: true, finalMSG: '¡Amarillo Gana!'});
+        } else if (result === 'empate') {
+            this.setState({tablero, gameOver: true, finalMSG: 'Empate :('});
+        } else {
+            this.setState({tablero, currentPlayer: this.togglePlayer()});
         }
     }
 
@@ -219,7 +223,7 @@ class WSC4Channel {
 
 function C4ServiceURL() {
     var host = window.location.host;
-    var url = 'wss://' + (host) + '/c4Service';
+    var url = 'ws://' + (host) + '/c4Service';
     console.log("URL Calculada: " + url);
     return url;
 }
