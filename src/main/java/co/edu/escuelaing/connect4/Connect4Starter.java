@@ -28,10 +28,10 @@ public class Connect4Starter {
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(Connect4Starter.class);
         Map<String,Object> properties = new HashMap<>();
-        properties.put("spring.data.mongodb.uri", "mongodb+srv://pokecris200:Sept2022.@cluster0.1bffmnu.mongodb.net/MongoDatos?retryWrites=true&w=majority");
-        app.setDefaultProperties(Collections.singletonMap("server.port", getPort()));
+        properties.put("spring.data.mongodb.uri", "mongodb+srv://pokecris200:Sept2022.@cluster0.1bffmnu.mongodb.net/Usernames?retryWrites=true&w=majority");
+        properties.put("server.port", getPort());
+        app.setDefaultProperties(properties);
         app.run(args);
-
     }
     
     static int getPort() {
@@ -43,9 +43,12 @@ public class Connect4Starter {
     }
     
     @GetMapping("/register")
-    public void register(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password){
+    public String register(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password){
         repository.save(new User(username,password));
+        return "Gracias por registrarte vuelve a ingresar";
     }
+    
+    
     
     
 }
