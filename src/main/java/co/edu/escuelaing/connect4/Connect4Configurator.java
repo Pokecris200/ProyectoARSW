@@ -20,4 +20,5 @@ public class Connect4Configurator {
     public ServerEndpointExporter serverEndpointExporter() {
         return new ServerEndpointExporter();
     }
+    
 }
