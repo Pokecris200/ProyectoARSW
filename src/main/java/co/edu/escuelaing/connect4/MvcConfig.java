@@ -5,6 +5,7 @@
 package co.edu.escuelaing.connect4;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -17,9 +18,13 @@ public class MvcConfig implements WebMvcConfigurer {
 
         @Override
 	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/").setViewName("index");
+		registry.addViewController("/").setViewName("main");
 		registry.addViewController("/login").setViewName("login");
                 registry.addViewController("/singin").setViewName("singin");
 	}
+        @Override
+        public void addResourceHandlers(ResourceHandlerRegistry registry) {
+            registry.addResourceHandler("/styles/**").addResourceLocations("classpath:/static/styles/");
+        }
 
 }
