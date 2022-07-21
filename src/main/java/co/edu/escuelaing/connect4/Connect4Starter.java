@@ -22,8 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @SpringBootApplication
 public class Connect4Starter {
     
-    @Autowired
-    private UserRepository repository;
     
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(Connect4Starter.class);
@@ -42,11 +40,6 @@ public class Connect4Starter {
         return 8080; 
     }
     
-    @GetMapping("/register")
-    public String register(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password){
-        repository.save(new User(username,password));
-        return "Gracias por registrarte vuelve a ingresar";
-    }
     
     
     
