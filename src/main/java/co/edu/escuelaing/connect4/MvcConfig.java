@@ -22,9 +22,9 @@ public class MvcConfig implements WebMvcConfigurer {
 		registry.addViewController("/login").setViewName("login");
                 registry.addViewController("/singin").setViewName("singin");
 	}
-        @Override
+        /*@Override
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry.addResourceHandler("/styles/**").addResourceLocations("classpath:/static/styles/");
-        }
+            registry.addResourceHandler("/styles/**").addResourceLocations("/static/styles/");
+        }*/
 
 }

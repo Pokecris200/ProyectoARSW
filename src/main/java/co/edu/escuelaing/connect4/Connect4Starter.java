@@ -28,6 +28,7 @@ public class Connect4Starter {
         Map<String,Object> properties = new HashMap<>();
         properties.put("spring.data.mongodb.uri", "mongodb+srv://pokecris200:Sept2022.@cluster0.1bffmnu.mongodb.net/Usernames?retryWrites=true&w=majority");
         properties.put("server.port", getPort());
+        //properties.put("spring.thymeleaf.mode", "HTML");
         app.setDefaultProperties(properties);
         app.run(args);
     }
