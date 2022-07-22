@@ -1,11 +1,9 @@
-import * as SockJS from 'sockjs-client';
-import * as Stomp from 'stompjs';
 
 class Tablero extends React.Component{
     
     constructor(props) {
         super(props);
-        this.comunicationWS =new WSC4Channel();
+        this.comunicationWS =new WSC4Channel(this);
         
         this.state = {
           jugador1: 1,
@@ -189,18 +187,18 @@ class Tablero extends React.Component{
 };
 
 class WSC4Channel {
-    constructor(callback) {
+    constructor(instance) {
             this.wsocket = new SockJS('/stompendpoint');
-            this.stompClient = Stomp.over(socket);
+            this.stompClient = Stomp.over(this.wsocket);
             this.wsocket.onopen = (evt) => this.onOpen(evt);
             this.wsocket.onmessage = (evt) => this.onMessage(evt);
             this.wsocket.onerror = (evt) => this.onError(evt);
-            this.receivef = callback;
             
             this.stompClient.connect({},() => {
-                stompClient.subscribe('/topic/message.'+_idsala,  (msg)=> {
+                this.stompClient.subscribe('/topic/row',  (msg)=> {
+                    console.log(msg);
                     var obj = JSON.parse(msg.body);
-                    this.putToken(obj.c);
+                    instance.putToken(obj.c);
                 });
             });
     }
@@ -263,19 +261,5 @@ const Cell = ({ value, columnIndex, juego }) => {
     </td>
   );
 };
-
-function connectAndSubscribe(juego) {
-        var socket = new SockJS('/stompendpoint');
-        var _id;
-        stompClient = Stomp.over(socket);
-
-        stompClient.connect({}, function (){
-            stompClient.subscribe('/topic/message.'+_idsala, (event) => {
-                let json = JSON.parse(event.body);
-                let c = json.c;
-                
-            });
-        });
-    };
 
 ReactDOM.render(<Tablero/>,document.getElementById('root'));

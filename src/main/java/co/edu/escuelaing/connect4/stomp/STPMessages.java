@@ -15,7 +15,7 @@ public class STPMessages {
     @Autowired
     SimpMessagingTemplate smt;
 
-    @MessageMapping("/message")
+    @MessageMapping("/row")
     public void handleMessageEvent(String message){
         smt.convertAndSend("/topic/row", message);
     }
