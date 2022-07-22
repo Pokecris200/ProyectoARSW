@@ -1,16 +1,11 @@
-import React from 'react';
+import * as SockJS from 'sockjs-client';
+import * as Stomp from 'stompjs';
 
 class Tablero extends React.Component{
     
     constructor(props) {
         super(props);
-        this.comunicationWS =
-                new WSC4Channel(C4ServiceURL(),
-                        (msg) => { 
-                        var obj = JSON.parse(msg);
-                        console.log("On func call back ", msg);
-                        this.putToken(obj.c); 
-                });
+        this.comunicationWS =new WSC4Channel();
         
         this.state = {
           jugador1: 1,
@@ -194,13 +189,20 @@ class Tablero extends React.Component{
 };
 
 class WSC4Channel {
-    constructor(URL, callback) {
-            this.URL = URL;
-            this.wsocket = new WebSocket(URL);
+    constructor(callback) {
+            this.wsocket = new SockJS('/stompendpoint');
+            this.stompClient = Stomp.over(socket);
             this.wsocket.onopen = (evt) => this.onOpen(evt);
             this.wsocket.onmessage = (evt) => this.onMessage(evt);
             this.wsocket.onerror = (evt) => this.onError(evt);
             this.receivef = callback;
+            
+            this.stompClient.connect({},() => {
+                stompClient.subscribe('/topic/message.'+_idsala,  (msg)=> {
+                    var obj = JSON.parse(msg.body);
+                    this.putToken(obj.c);
+                });
+            });
     }
     onOpen(evt) {
         console.log("In onOpen", evt);
@@ -216,8 +218,7 @@ class WSC4Channel {
     }
     send(x) {
         let msg = '{ "c": ' + (x)+"}";
-        console.log("sending: ", msg);
-        this.wsocket.send(msg);
+        this.stompClient.send('/app/row', {}, msg);
     }
 }
 
@@ -262,5 +263,19 @@ const Cell = ({ value, columnIndex, juego }) => {
     </td>
   );
 };
+
+function connectAndSubscribe(juego) {
+        var socket = new SockJS('/stompendpoint');
+        var _id;
+        stompClient = Stomp.over(socket);
+
+        stompClient.connect({}, function (){
+            stompClient.subscribe('/topic/message.'+_idsala, (event) => {
+                let json = JSON.parse(event.body);
+                let c = json.c;
+                
+            });
+        });
+    };
 
 ReactDOM.render(<Tablero/>,document.getElementById('root'));
