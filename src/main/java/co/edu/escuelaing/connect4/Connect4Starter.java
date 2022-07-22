@@ -4,15 +4,11 @@
  */
 package co.edu.escuelaing.connect4;
 
-import java.util.Collections;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import co.edu.escuelaing.connect4.db.*;
-import org.springframework.web.bind.annotation.GetMapping;
 import java.util.HashMap;
 import java.util.Map;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 /**

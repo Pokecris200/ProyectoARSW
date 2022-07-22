@@ -7,7 +7,6 @@ package co.edu.escuelaing.connect4;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
 /**
