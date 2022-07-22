@@ -1,4 +1,4 @@
-
+import React from 'react';
 
 class Tablero extends React.Component{
     
