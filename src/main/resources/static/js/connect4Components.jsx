@@ -43,16 +43,6 @@ class Tablero extends React.Component{
 
     juego(c) {
         
-        if (this.state.ActivePlayer === 0){
-            console.log("entró al if"); 
-            if(this.isEmpty(this.state.tablero)){
-                this.state.ActivePlayer = 1;
-                console.log("Cambio a jugador 1");
-            }
-            else{
-                this.state.ActivePlayer = 2;
-            }
-        }
         if (!this.state.gameOver && (this.state.ActivePlayer === this.state.currentPlayer)) {
             let wsreference = this.comunicationWS;
             wsreference.send(c);
