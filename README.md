@@ -61,7 +61,7 @@ Una vez se realice este comando, se debe buscar en la siguiente ruta "target\sit
 	| | | | |____styles
 	| | | |____templates
 	
-![Structure](https://drive.google.com/file/d/1JD_WwraU_5eo6r5-KSzYdrpqUb0Msz8l/view?usp=sharing)
+![Structure](PaquetesARSW.png)
 
 ## Autor
 
