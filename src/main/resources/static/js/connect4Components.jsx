@@ -11,9 +11,11 @@ class Tablero extends React.Component{
           currentPlayer: null,
           tablero: [],
           gameOver: false,
-          finalMSG: ''
+          finalMSG: '',
+          ActivePlayer: 0
         };
 
+        
         this.juego = this.juego.bind(this);
     }
 
@@ -40,11 +42,21 @@ class Tablero extends React.Component{
     }
 
     juego(c) {
-        if (!this.state.gameOver) {
-            this.putToken(c);
+        
+        if (this.state.ActivePlayer === 0){
+            console.log("entró al if"); 
+            if(this.isEmpty(this.state.tablero)){
+                this.state.ActivePlayer = 1;
+                console.log("Cambio a jugador 1");
+            }
+            else{
+                this.state.ActivePlayer = 2;
+            }
+        }
+        if (!this.state.gameOver && (this.state.ActivePlayer === this.state.currentPlayer)) {
             let wsreference = this.comunicationWS;
             wsreference.send(c);
-        } else {
+        } else if (this.state.gameOver){
             this.setState({ finalMSG: 'Game over. Inicie un nuevo Juego.' });
         }
     }
@@ -155,6 +167,15 @@ class Tablero extends React.Component{
             color = 'circle yellow-sm';
         }
         return color;
+    }
+    
+    isEmpty(tablero){
+        let empty = true;
+        for (let f = 0; f < 6; f++) {
+            for (let c = 0; c < 7; c++) {
+                empty = empty && (tablero[f][c] === null);
+            }
+        }
     }
   
     render() {
